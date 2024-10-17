@@ -37,7 +37,12 @@ pipeline {
         stage('Deploy image') {
             steps {
                 script {
-                    sh "docker run -d -p 80:80 --name tp2-container $registry:$BUILD_NUMBER"
+                    sh """
+                    docker stop tp2-container || true
+                    docker rm tp2-container || true
+                    """
+
+                    sh "docker run -d -p 80:80 --name tp2-container anaserrami/activity-jenkins:$BUILD_NUMBER"
                 }
             }
         }
