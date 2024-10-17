@@ -34,5 +34,12 @@ pipeline {
                 }
             }
         }
+        stage('Deploy image') {
+            steps {
+                script {
+                    sh "docker run -d -p 80:80 --name tp2-container2 $registry:$BUILD_NUMBER"
+                }
+            }
+        }
     }
 }
